@@ -1,4 +1,5 @@
-const { app, BrowserWindow, screen } = require("electron");
+const { app, BrowserWindow, screen, ipcMain, shell } = require("electron");
+const path = require('node:path')
 
 function createWindow() {
   const width = screen.getPrimaryDisplay().size.width;
@@ -15,11 +16,23 @@ function createWindow() {
     roundedCorners: true,
     x: width - width / 6,
     y: height / 3 - 75,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+    }
   });
-
+  
   win.loadURL("http://localhost:3000/");
 }
 
 app.whenReady().then(() => {
   createWindow();
 });
+
+
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') app.quit()
+})
+
+ipcMain.on('openfile', (event, link) => {
+  shell.openExternal(link);
+})

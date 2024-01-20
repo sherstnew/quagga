@@ -6,6 +6,12 @@ import fileIcon from '../../static/logos/file.svg';
 import { fileIcons }from '../../static/data/icons';
 import { IFile } from '../../static/types/IFile';
 
+declare global {
+  interface Window {
+      electron:any;
+  }
+}
+
 export function FilesBlock () {
 
   const [files, setFiles] = useState([]);
@@ -33,7 +39,9 @@ export function FilesBlock () {
       <div className={styles.files}>
         {
           files.map((file: IFile) => (
-            <div className={styles.file}>
+            <div className={styles.file} onClick={() => {
+              window.electron.openFile(`http://91.204.253.192:45219/${file.downloadpath}`);
+            }}>
               <img src={fileIcons[file.extension.toUpperCase()] || fileIcon} alt="" className={styles.file__icon} />
               <div className={styles.file__name}>
                 {
