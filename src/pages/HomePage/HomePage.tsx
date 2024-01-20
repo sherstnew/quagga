@@ -1,6 +1,6 @@
 import styles from "./HomePage.module.scss";
 import quaggaLogo from "../../static/logos/quagga.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { QrBlock } from "../../blocks/QrBlock/QrBlock";
 import { MenuBlock } from "../../blocks/MenuBlock/MenuBlock";
@@ -10,7 +10,11 @@ export function HomePage() {
   const { block } = useParams();
   const [opened, setOpened] = useState(false);
 
-  console.log(block);
+  useEffect(() => {
+    if (block !== undefined) {
+      setOpened(true);
+    };
+  }, [block]);
 
   return (
     <main className={styles.main}>
@@ -26,8 +30,7 @@ export function HomePage() {
         ) : block === "files" ? (
           <FilesBlock />
         ) : (
-          // <QrBlock />
-          <MenuBlock />
+          <QrBlock />
         )
       ) : (
         ""

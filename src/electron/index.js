@@ -16,11 +16,10 @@ function createWindow() {
     x: width - width / 6,
     y: height / 3 - 75,
   });
-  
+
   win.loadURL("http://localhost:3000/");
-};
+}
 
 app.whenReady().then(() => {
-  createWindow()
-})
-
+  createWindow();
+});

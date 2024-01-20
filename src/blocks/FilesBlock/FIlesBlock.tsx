@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { Logo } from '../../components/Logo/Logo';
 import { Link } from 'react-router-dom';
 import fileIcon from '../../static/logos/file.svg';
+import { fileIcons }from '../../static/data/icons';
+import { IFile } from '../../static/types/IFile';
 
 export function FilesBlock () {
 
@@ -30,9 +32,9 @@ export function FilesBlock () {
       <Link to='/menu' className={styles.back}>← Обратно</Link>
       <div className={styles.files}>
         {
-          files.map((file: any) => (
+          files.map((file: IFile) => (
             <div className={styles.file}>
-              <img src={fileIcon} alt="" className={styles.file__icon} />
+              <img src={fileIcons[file.extension.toUpperCase()] || fileIcon} alt="" className={styles.file__icon} />
               <div className={styles.file__name}>
                 {
                   `${file.displayName}.${file.extension}`
