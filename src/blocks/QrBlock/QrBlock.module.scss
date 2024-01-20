@@ -1,0 +1,59 @@
+.block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100vh;
+    gap: 15px;
+    background-color: #f3f3f3;
+}
+
+.header {
+    font-size: 24px;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+}
+
+.subheader {
+    width: 100%;
+    font-size: 18px;
+    color: #828282;
+    text-align: center;
+}
+
+.qr {
+    width: 40%;
+}
+
+.divider {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.line {
+    width: 20%;
+    margin: 0;
+    border-color: #ffffff;
+}
+
+.or {
+    text-align: center;
+    width: 10%;
+    color: #828282;
+}
+
+.schoolcard {
+    text-align: center;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: center;
+}
