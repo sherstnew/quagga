@@ -18,11 +18,15 @@ npm start
 npm run app
 ```
 
+3. Сервер:
+
+```
+python app.py
+```
+
 Продолжение: 
 
 Тг-бот: https://github.com/Anisa6/quagga-bot
 ```
 python qqq.py
 ```
-Сервер: 
-(я не знаю как он запускается, но он на голанге, вопросы к бэкендеру)

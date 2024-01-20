@@ -20,7 +20,8 @@ function createWindow() {
     // y: 0,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    icon: path.join(__dirname, 'quagga.ico')
   });
   
   win.loadURL("http://localhost:3000/");
