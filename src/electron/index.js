@@ -8,6 +8,7 @@ function createWindow() {
   const win = new BrowserWindow({
     width: width / 6,
     height: height / 2.5,
+    // height: height,
     resizable: false,
     movable: false,
     alwaysOnTop: true,
@@ -16,6 +17,7 @@ function createWindow() {
     roundedCorners: true,
     x: width - width / 6,
     y: height / 3 - 75,
+    // y: 0,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
