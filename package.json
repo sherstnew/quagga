@@ -1,48 +1,16 @@
 {
   "name": "quagga",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.72",
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
-    "electron": "^28.1.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-qr-code": "^2.0.12",
-    "react-router-dom": "^6.21.3",
-    "react-scripts": "5.0.1",
-    "sass": "^1.70.0",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
-  },
+  "version": "1.0.0",
+  "description": "Quagga",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "app": "electron ./src/electron/index.js"
+    "server": "cd ./server/ && unicorn main:app --reload",
+    "web-dev": "cd ./web/ && npm run dev",
+    "web-build": "cd ./web/ && npm run build",
+    "desktop-dev": "cd ./desktop/website/ && npm run dev",
+    "desktop-build": "cd ./desktop/website/ && npm run build",
+    "electron": "cd ./desktop/electron/ && tsc index.ts --outDir ./app/ && tsc preload.ts --outDir ./app/ && electron ./app/index.js"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "author": "Denis Sherstnev",
+  "license": "ISC"
 }

@@ -1,0 +1,55 @@
+import * as path from 'path';
+import { app, BrowserWindow, screen, ipcMain, shell, Tray, nativeImage } from "electron";
+import { RFIDhandler } from './RFIDhandler';
+
+function createWindow() {
+  const width = screen.getPrimaryDisplay().size.width;
+  const height = screen.getPrimaryDisplay().size.height;
+
+  const window = new BrowserWindow({
+    width: width / 6,
+    height: height / 2,
+    resizable: false,
+    movable: false,
+    alwaysOnTop: true,
+    transparent: true,
+    frame: false,
+    roundedCorners: true,
+    skipTaskbar: true,
+    x: width - width / 6,
+    y: height - height / 2 - 50,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+    },
+    icon: path.join(__dirname, 'static/quagga.ico')
+  });
+
+  window.loadURL("http://localhost:3000/");
+
+  RFIDhandler(window);
+
+  const icon = nativeImage.createFromPath(path.join(__dirname, 'quagga.ico'));
+  const tray = new Tray(icon);
+  tray.setToolTip('Quagga');
+
+  tray.on("click", () => {
+    if (window.isVisible()) {
+      window.hide();
+    } else {
+      window.show();
+    }
+  })
+
+  ipcMain.on('openfile', (event, link) => {
+    shell.openExternal(link);
+  })
+}
+
+app.whenReady().then(() => {
+  createWindow();
+});
+
+
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') app.quit()
+})

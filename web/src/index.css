@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'TT Norms Pro';
+  font-weight: 400;
+  src: url('./assets/fonts/TTNormsPro-Regular.woff2');
+}
+
+@font-face {
+  font-family: 'TT Norms Pro';
+  font-weight: 500;
+  src: url('./assets/fonts/TTNormsPro-Medium.woff2');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #fafafa;
+  background-color: #fafafa;
+  font-family: 'TT Norms Pro';
+}
+
+a {
+  text-decoration: none;
+}
