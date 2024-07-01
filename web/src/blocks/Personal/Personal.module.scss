@@ -1,0 +1,35 @@
+.personal {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 30px;
+  width: 100%;
+  font-size: 20px;
+}
+
+.personal_block {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
+
+.label {
+  width: 100%;
+}
+
+.input {
+  all: unset;
+  width: 250px;
+  height: 25px;
+  border: none;
+  outline: 1px #c9c9c9 solid;
+  border-radius: 12px;
+  padding: 10px;
+  font-family: 'TT Norms Pro';
+  font-size: 16px;
+  padding-left: 20px;
+}

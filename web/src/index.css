@@ -14,10 +14,16 @@ body {
   margin: 0;
   padding: 0;
   color: #fafafa;
-  background-color: #fafafa;
+  background-color: #141624;
   font-family: 'TT Norms Pro';
 }
 
 a {
   text-decoration: none;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }

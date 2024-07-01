@@ -1,5 +1,5 @@
 import styles from './Landing.module.scss';
-import Header from '../../components/Header/Header';
+import Header from '../../blocks/Header/Header';
 import DownloadApp from './../../blocks/DownloadApp/DownloadApp';
 
 export default function Landing() {
