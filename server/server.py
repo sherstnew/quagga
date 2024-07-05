@@ -1,9 +1,8 @@
-import os
-from fastapi import FastAPI, File, Form
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from typing import Annotated
+from routers import users, connections, sessions, files, panels
 
 app = FastAPI()
 
@@ -18,13 +17,8 @@ app.add_middleware(
 
 app.mount('/static', StaticFiles(directory="static"), name="static")
 
-@app.get('/')
-async def index():
-  return 'QuaggaAPI'
-
-@app.post('/uploadFile')
-async def uploadFile(file: Annotated[bytes, File()], extension: Annotated[str, Form]):
-  file_path = f"static/{os.urandom(15).hex()}.{extension}"
-  with open(file_path, "wb") as uploaded_file:
-    uploaded_file.write(file)
-  return "ok"
+app.include_router(router=users.router, tags=["Users"])
+app.include_router(router=connections.router, tags=["Connections"])
+app.include_router(router=sessions.router, tags=["Sessions"])
+app.include_router(router=files.router, tags=["Files"])
+app.include_router(router=panels.router, tags=["Panels"])
