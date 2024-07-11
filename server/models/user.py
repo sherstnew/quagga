@@ -1,12 +1,12 @@
 from pydantic import BaseModel
 from typing import List
-from models.connection import Connection
 from models.session import Session
+from models.file import File
 
 class User(BaseModel):
   name: str
-  connections: List[str]
-  sessions: List[str]
-  email: str
+  sessions: List[Session]
+  files: List[File]
   isConfirmed: bool
-  passwordHash: str
+  email: str
+  password: str

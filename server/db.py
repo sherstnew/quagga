@@ -4,8 +4,7 @@ client = AsyncIOMotorClient("mongodb://localhost:27017")
 
 database = client.quagga
 
-connections_collection = database.get_collection("connections")
+users_collection = database.get_collection("users")
+sessions_collection = database.get_collection("sessions")
 files_collection = database.get_collection("files")
 panels_collection = database.get_collection("panels")
-sessions_collection = database.get_collection("sessions")
-users_collection = database.get_collection("users")
