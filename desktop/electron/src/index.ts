@@ -8,7 +8,7 @@ function createWindow() {
 
   const window = new BrowserWindow({
     width: width / 6,
-    height: height / 2,
+    height: height / 2 + 100,
     resizable: false,
     movable: false,
     alwaysOnTop: true,
@@ -17,18 +17,19 @@ function createWindow() {
     roundedCorners: true,
     skipTaskbar: true,
     x: width - width / 6,
-    y: height - height / 2 - 50,
+    y: height - height / 2 - 150,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
     icon: path.join(__dirname, 'static/quagga.ico')
   });
 
-  window.loadURL("http://localhost:3000/");
+  window.loadURL(`http://localhost:9000/`);
+  // window.loadURL(`file://${path.join(__dirname, 'dist/index.html')}`);
 
   RFIDhandler(window);
 
-  const icon = nativeImage.createFromPath(path.join(__dirname, 'quagga.ico'));
+  const icon = nativeImage.createFromPath(path.join(__dirname, '/static/quagga.ico'));
   const tray = new Tray(icon);
   tray.setToolTip('Quagga');
 
@@ -43,10 +44,14 @@ function createWindow() {
   ipcMain.on('openfile', (event, link) => {
     shell.openExternal(link);
   })
+
+  // window.webContents.openDevTools();
+
 }
 
 app.whenReady().then(() => {
   createWindow();
+  console.log(`Window created: ${path.join(__dirname, 'dist/index.html')}`);
 });
 
 

@@ -1,6 +1,10 @@
+import os
 from passlib.context import CryptContext
+from dotenv import load_dotenv
 
-SECRET_KEY = "3c9e0c73d91fadb89bba4bbf12772221ecb11ce9b35e9f78f480499eaf5290f1"
-ALGORITHM = "HS256"
+load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

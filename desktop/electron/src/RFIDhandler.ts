@@ -11,7 +11,7 @@ export function RFIDhandler(window: BrowserWindow) {
         parser.on('data', function (data: Buffer) {
           const controllerData = data.toString();
           if (controllerData.split(':')[0] === "UID") {
-            const uid = controllerData.split(':')[1];
+            const uid = controllerData.split(':')[1].trim();
             window.webContents.send('send-uid', uid);
           }
         })

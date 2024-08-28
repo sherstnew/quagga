@@ -1,0 +1,28 @@
+.link_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100vw;
+  height: 100vh;
+}
+
+.message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  width: 80%;
+}
+
+.message_text {
+  width: 100%;
+  font-size: 18px;
+}
+
+.login {
+  padding: 15px 20px;
+  border-radius: 10px;
+  outline: 1px #fafafa solid;
+}

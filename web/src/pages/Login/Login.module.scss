@@ -9,6 +9,9 @@
 
 .hand {
   width: 30%;
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
 }
 
 .login {
@@ -22,12 +25,20 @@
   border-radius: 12px;
   color: #fafafa;
   background-color: #242735;
+  @media screen and (max-width: 700px) {
+    width: 80%;
+    padding: 20px;
+  }
 }
 
 .login_header {
   width: 100%;
   font-size: 32px;
   margin: 0;
+  @media screen and (max-width: 700px) {
+    font-size: 24px;
+    font-weight: 500;
+  }
 }
 
 .login_block {

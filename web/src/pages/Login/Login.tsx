@@ -1,12 +1,20 @@
 import styles from './Login.module.scss';
 import Header from '../../blocks/Header/Header';
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import handImg from '../../assets/images/hand.webp';
 import eyeOpenIcon from '../../assets/icons/eye-open.svg';
 import eyeClosedIcon from '../../assets/icons/eye-closed.svg';
 
 export default function Login() {
+
+  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+
+  const [, setCookie] = useCookies(['QUAGGA_TOKEN']);
 
   const [passwordHidden, setPasswordHidden] = useState(true);
 
@@ -15,7 +23,28 @@ export default function Login() {
 
   const login = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(email, password);
+    if (email !== "" && password !== "") {
+      fetch(`${import.meta.env.VITE_PUBLIC_BACKEND_HTTP_URL}/sessions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "ok") {
+          setCookie('QUAGGA_TOKEN', data.data.token);
+          navigate(`/panel${searchParams.get('panelId') ? "?panelId=" + searchParams.get('panelId') : ""}`);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
   }
 
   return (

@@ -1,13 +1,13 @@
 .page {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   align-content: flex-start;
   flex-wrap: wrap;
   width: 70%;
-  height: 100vh;
   margin-top: 150px;
-  gap: 50px;
+  gap: 40px;
+  padding-bottom: 100px;
 }
 
 .header {
@@ -15,4 +15,21 @@
   font-size: 48px;
   font-weight: 400;
   margin: 0;
+}
+
+.btn {
+  padding: 15px 20px;
+  border-radius: 10px;
+  border: none;
+  color: #fafafa;
+  font-family: 'TT Norms Pro';
+  font-size: 16px;
+  background-color: #ff222200;
+  outline: #fafafa solid 1px;
+  cursor: pointer;
+  transition: .5s;
+  &:hover {
+    background-color: #ff2222;
+    outline: #ff2222 solid 1px;
+  }
 }

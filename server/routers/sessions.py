@@ -1,12 +1,14 @@
 import secrets
 from fastapi import APIRouter, Response, status
-from fastapi.encoders import jsonable_encoder
 from datetime import datetime, timedelta
 from pydantic import BaseModel
-
+from models.response import ResponseWithData
 from models.session import Session
+from models.user import User
 from db import users_collection, sessions_collection
 from passwords import pwd_context
+from utils.find_user_by_token import find_user_by_token
+from utils.prepare_user import prepare_user
 
 router = APIRouter(prefix="/sessions")
 
@@ -15,18 +17,11 @@ class LoginData(BaseModel):
   password: str
 
 @router.post('/')
-async def create_session(login_data: LoginData, response: Response) -> Session:
-
-  login_data = jsonable_encoder(login_data)
+async def create_session(login_data: LoginData, response: Response) -> ResponseWithData[Session]:
 
   user = await users_collection.find_one({"email": login_data["email"]})
 
   if pwd_context.verify(login_data["password"], user["password"]):
-
-    existing_session = await sessions_collection.find_one({"userId": str(user["_id"])})
-
-    if existing_session is not None:
-      await sessions_collection.delete_one({"_id": existing_session["_id"]})
 
     token = secrets.token_hex(32)
 
@@ -39,13 +34,25 @@ async def create_session(login_data: LoginData, response: Response) -> Session:
     }
 
     await sessions_collection.insert_one(new_session)
+    user["sessions"].append(new_session)
+    await users_collection.update_one({"_id": user["_id"]}, {"$set": user})
 
-    return new_session
+    return {
+      "status": "ok",
+      "data": new_session
+    }
 
   else:
     return Response(content="Login failed", status_code=status.HTTP_403_FORBIDDEN)
 
-@router.get('/{token}')
-async def get_session(token: str) -> Session:
-  session = await sessions_collection.find_one({"token": token})
-  return session if session else Response(content="Session not found", status_code=status.HTTP_403_FORBIDDEN)
+@router.get('/user/{token}')
+async def get_user_by_token(token: str) -> ResponseWithData[User]:
+  user = await find_user_by_token(token)
+  if user:
+    user = {
+      "status": "ok",
+      "data": prepare_user(user)
+    }
+    return user
+  else:
+    return Response(content="User not found", status_code=status.HTTP_404_NOT_FOUND)

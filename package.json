@@ -4,13 +4,18 @@
   "description": "Quagga",
   "main": "index.js",
   "scripts": {
-    "server": "cd ./server/ && unicorn main:app --reload",
+    "dev": "concurrently --kill-others \"npm run server\" \"npm run web-dev\" \"npm run desktop-dev\" \"npm run electron\"",
+    "server": "cd ./server/ && uvicorn server:app --host 0.0.0.0 --port 8000 --reload",
+    "web-all": "concurrently --kill-others \"npm run web-dev\" \"npm run desktop-dev\"",
     "web-dev": "cd ./web/ && npm run dev",
     "web-build": "cd ./web/ && npm run build",
     "desktop-dev": "cd ./desktop/website/ && npm run dev",
     "desktop-build": "cd ./desktop/website/ && npm run build",
-    "electron": "cd ./desktop/electron/ && tsc index.ts --outDir ./app/ && tsc preload.ts --outDir ./app/ && electron ./app/index.js"
+    "electron": "cd ./desktop/electron/ && tsc ./src/index.ts --outDir ./compiled/ && tsc ./src/preload.ts --outDir ./compiled/ && electron ./compiled/index.js"
   },
   "author": "Denis Sherstnev",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
 }

@@ -5,5 +5,5 @@ contextBridge.exposeInMainWorld(
   {
     openFile: (fileLink: string) => ipcRenderer.send('openfile', fileLink),
     onSendUID: (callback: Function) => ipcRenderer.on('send-uid', (_event, value) => callback(value))
-  }
+  },
 )

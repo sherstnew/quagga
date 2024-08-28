@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from routers import users, connections, sessions, files, panels
+from routers import users, connections, sessions, files
 
 app = FastAPI()
 
@@ -21,4 +21,3 @@ app.include_router(router=users.router, tags=["Users"])
 app.include_router(router=connections.router, tags=["Connections"])
 app.include_router(router=sessions.router, tags=["Sessions"])
 app.include_router(router=files.router, tags=["Files"])
-app.include_router(router=panels.router, tags=["Panels"])

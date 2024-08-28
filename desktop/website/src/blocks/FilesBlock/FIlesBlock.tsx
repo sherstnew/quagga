@@ -1,51 +1,37 @@
 import styles from './FilesBlock.module.scss';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { Logo } from '../../components/Logo/Logo';
 import { Link } from 'react-router-dom';
 import fileIcon from '../../static/logos/file.svg';
 import { fileIcons }from '../../static/data/icons';
 import { IFile } from '../../static/types/IFile';
+import { UserContext } from '../../contexts/UserContext';
+
 
 declare global {
   interface Window {
-      electron:any;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      electron: any;
   }
 }
 
 export function FilesBlock () {
 
-  const [files, setFiles] = useState([]);
-
-  useEffect(() => {
-    fetch('http://91.204.253.192:45219/api/panel/files/fetch', {
-      headers: {
-        'Authorization': 'f60919de81624e7bde76b6a6e6272a82388b39ae9837f682817956ca0754b030'
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data) {
-        setFiles(data);
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }, []);
+  const {user} = useContext(UserContext);
 
   return (
     <div className={styles.block}>
       <Link to='/menu' className={styles.back}>← Обратно</Link>
       <div className={styles.files}>
         {
-          files.map((file: IFile) => (
-            <div className={styles.file} onClick={() => {
-              window.electron.openFile(`http://91.204.253.192:45219/${file.downloadpath}`);
+          user.files.map((file: IFile, index: number) => (
+            <div key={index} className={styles.file} onClick={() => {
+              window.electron.openFile(`${import.meta.env.VITE_PUBLIC_BACKEND_HTTP_URL}${file.path}`);
             }}>
               <img src={fileIcons[file.extension.toUpperCase()] || fileIcon} alt="" className={styles.file__icon} />
               <div className={styles.file__name}>
                 {
-                  `${file.displayName}.${file.extension}`
+                  `${file.originalName}.${file.extension}`
                 }
               </div>
             </div>
