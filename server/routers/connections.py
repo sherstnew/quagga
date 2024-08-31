@@ -16,14 +16,11 @@ class CardAuth(BaseModel):
   panelId: str
 
 @router.post('/card')
-async def authorize_by_card(card_auth: CardAuth) -> User:
+async def authorize_by_card(card_auth: CardAuth):
   if card_auth.panelId in ws_panels:
     user = await users_collection.find_one({"cardId": card_auth.cardId})
-    print(user)
-    print(card_auth.cardId)
-    print(len(card_auth.cardId))
     if user:
-      return user
+      return prepare_user(user)
     else:
       return Response(status_code=status.HTTP_404_NOT_FOUND, content="User not found")
   else:
@@ -37,9 +34,13 @@ async def ws_connect(websocket: WebSocket):
       data = await websocket.receive_text()
       if data:
         data = json.loads(data)
+          
         if data["panelId"] in ws_panels:
           user = await users_collection.find_one({"_id": ObjectId(data["userId"])})
-          await ws_panels[data["panelId"]].send_text(json.dumps(prepare_user(user)))
+          if data["cardId"] and data["cardId"] != "":
+            user["cardId"] = data["cardId"]
+            await users_collection.update_one({"_id": user["_id"]}, {"$set": user})
+          await ws_panels[data["panelId"]].send_text(json.dumps(prepare_user(user), default=str))
           await websocket.send_text("User connected");
   except Exception as e:
     print(e)

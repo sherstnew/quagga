@@ -1,11 +1,13 @@
 import styles from './QRLink.module.scss';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function QRLink() {
 
   const { panelId } = useParams();
+
+  const [sp] = useSearchParams();
 
   const [cookies] = useCookies(['QUAGGA_TOKEN']);
 
@@ -25,7 +27,8 @@ export default function QRLink() {
               if (data.status === "ok") {
                 ws.send(JSON.stringify({
                   userId: data.data._id,
-                  panelId: panelId
+                  panelId: panelId,
+                  cardId: sp.get("cardId") && sp.get("cardId") !== "0" ? sp.get("cardId") : ""
                 }))
               }
             })

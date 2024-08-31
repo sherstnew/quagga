@@ -17,11 +17,11 @@ class LoginData(BaseModel):
   password: str
 
 @router.post('/')
-async def create_session(login_data: LoginData, response: Response) -> ResponseWithData[Session]:
+async def create_session(login_data: LoginData, response: Response):
 
-  user = await users_collection.find_one({"email": login_data["email"]})
+  user = await users_collection.find_one({"email": login_data.email})
 
-  if pwd_context.verify(login_data["password"], user["password"]):
+  if pwd_context.verify(login_data.password, user["password"]):
 
     token = secrets.token_hex(32)
 
@@ -46,7 +46,7 @@ async def create_session(login_data: LoginData, response: Response) -> ResponseW
     return Response(content="Login failed", status_code=status.HTTP_403_FORBIDDEN)
 
 @router.get('/user/{token}')
-async def get_user_by_token(token: str) -> ResponseWithData[User]:
+async def get_user_by_token(token: str):
   user = await find_user_by_token(token)
   if user:
     user = {

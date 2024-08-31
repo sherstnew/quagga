@@ -3,7 +3,6 @@ import presentationIcon from '../../static/logos/presentation.svg';
 import exitIcon from '../../static/logos/exit.svg';
 import reloadIcon from '../../static/logos/reload.svg';
 import { Link } from 'react-router-dom';
-import { Logo } from '../../components/Logo/Logo';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import { useContext, useEffect, useState } from 'react';
@@ -34,9 +33,10 @@ export function MenuBlock () {
       if (user._id) {
         reload();
       }
-    }, [user]);
+    }, []);
 
     const reload = () => {
+      console.log(user);
       setLoading(true);
       fetch(`${import.meta.env.VITE_PUBLIC_BACKEND_HTTP_URL}/users/${user._id}`)
       .then((res) => res.json())
@@ -69,7 +69,6 @@ export function MenuBlock () {
             <header className={styles.card__header}>Обновить</header>
         </div>
       </div>
-      <Logo />
     </div>
   );
 }

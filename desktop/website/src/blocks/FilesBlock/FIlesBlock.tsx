@@ -1,6 +1,5 @@
 import styles from './FilesBlock.module.scss';
 import { useContext } from 'react';
-import { Logo } from '../../components/Logo/Logo';
 import { Link } from 'react-router-dom';
 import fileIcon from '../../static/logos/file.svg';
 import { fileIcons }from '../../static/data/icons';
@@ -38,7 +37,6 @@ export function FilesBlock () {
           ))
         }
       </div>
-      <Logo />
     </div>
   );
 }

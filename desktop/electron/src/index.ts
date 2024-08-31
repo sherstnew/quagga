@@ -7,17 +7,17 @@ function createWindow() {
   const height = screen.getPrimaryDisplay().size.height;
 
   const window = new BrowserWindow({
-    width: width / 6,
-    height: height / 2 + 100,
+    // width: width / 6,
+    // height: height / 2 + 100,
     resizable: false,
-    movable: false,
-    alwaysOnTop: true,
+    // movable: false,
+    // alwaysOnTop: true,
     transparent: true,
-    frame: false,
+    // frame: false,
     roundedCorners: true,
     skipTaskbar: true,
-    x: width - width / 6,
-    y: height - height / 2 - 150,
+    // x: width - width / 6,
+    // y: height - height / 2 - 150,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
@@ -45,7 +45,7 @@ function createWindow() {
     shell.openExternal(link);
   })
 
-  // window.webContents.openDevTools();
+  window.webContents.openDevTools();
 
 }
 

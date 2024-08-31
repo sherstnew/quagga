@@ -1,7 +1,7 @@
 import { SerialPort, DelimiterParser } from 'serialport';
 import { BrowserWindow } from 'electron';
 
-export function RFIDhandler(window: BrowserWindow) {
+export function RFIDhandler(window: BrowserWindow) { 
   SerialPort.list()
   .then((ports) => {
     ports.forEach((port) => {
@@ -10,8 +10,10 @@ export function RFIDhandler(window: BrowserWindow) {
         const parser = serial.pipe(new DelimiterParser({ delimiter: '\n' }));
         parser.on('data', function (data: Buffer) {
           const controllerData = data.toString();
+          console.log(controllerData);
           if (controllerData.split(':')[0] === "UID") {
             const uid = controllerData.split(':')[1].trim();
+            console.log(uid);
             window.webContents.send('send-uid', uid);
           }
         })

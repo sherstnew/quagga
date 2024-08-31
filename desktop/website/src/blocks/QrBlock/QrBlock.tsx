@@ -1,6 +1,5 @@
 import styles from './QrBlock.module.scss';
 import QRCode from 'react-qr-code';
-import { Logo } from '../../components/Logo/Logo';
 import { useEffect, useContext, useState } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +13,8 @@ declare global {
 
 export function QrBlock() {
   const [panelId, setPanelId] = useState<string>('');
+
+  const [cardId, setCardId] = useState<string | null>(null);
 
   window.electron.onSendUID((uid: string) => {
     authByUid(uid);
@@ -49,11 +50,14 @@ export function QrBlock() {
       })
       .then(res => res.json())
       .then(data => {
-        if (data._id !== '') {
+        if (data._id && data._id !== '') {
           setUser(data);
+        } else {
+          setCardId(uid);
         }
       })
       .catch(err => {
+        setCardId(uid);
         console.log(err);
       })
     }
@@ -61,10 +65,12 @@ export function QrBlock() {
 
   useEffect(() => {
     if (panelId === '') {
+      
       const ws = new WebSocket(
         `${import.meta.env.VITE_PUBLIC_BACKEND_WS_URL}/connections/add`
       );
-      const panId = window.crypto.randomUUID();
+      // const panId = window.crypto.randomUUID();
+      const panId = "123";
 
       ws.onopen = function () {
         ws.send(
@@ -103,7 +109,7 @@ export function QrBlock() {
       <span className={styles.subheader}>войдите с помощью сайта</span>
       {panelId !== '' ? (
         <QRCode
-          value={`${import.meta.env.VITE_PUBLIC_AUTH_URL}/qr/${panelId}`}
+          value={`${import.meta.env.VITE_PUBLIC_AUTH_URL}/qr/${panelId}?cardId=${cardId ? cardId : "0"}`}
           className={styles.qr}
         />
       ) : (
@@ -114,8 +120,7 @@ export function QrBlock() {
         <span className={styles.or}>или</span>
         <hr className={styles.line} />
       </div>
-      <span className={styles.schoolcard}>Приложить карту</span>
-      <Logo />
+      <span className={styles.schoolcard}>{cardId ? "Карта не привязана. Чтобы привязать карту, войдите по QR." : "Приложите карту"}</span>
     </div>
   );
 }

@@ -10,7 +10,7 @@ from utils.prepare_user import prepare_user
 router = APIRouter(prefix="/users")
 
 @router.get("/{id}")
-async def get_user(id: str = Path(..., regex=r"^[0-9a-f]{24}$")) -> User:
+async def get_user(id: str = Path(..., regex=r"^[0-9a-f]{24}$")):
   user = await users_collection.find_one({"_id": ObjectId(id)})
   return prepare_user(user) if user else Response(status_code=status.HTTP_404_NOT_FOUND)
 
@@ -22,7 +22,7 @@ async def create_user(user: User) -> str:
   return 'ok'
 
 @router.patch('/{id}')
-async def edit_user(id: str = Path(..., regex=r"^[0-9a-f]{24}$"), user: User = Body(...)) -> User:
+async def edit_user(id: str = Path(..., regex=r"^[0-9a-f]{24}$"), user: User = Body(...)):
   await users_collection.update_one(
     {"_id": ObjectId(id)},
     {"$set": jsonable_encoder(user)}
